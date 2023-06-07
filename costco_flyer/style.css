@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+}
+
+.flyer_container {
+    text-align: center;
+    max-width: 1500px;
+}
+
+.center_screen_container {
+    display: flex;
+    align-items: center;
+
+}
+
+.left_btn {
+    cursor:pointer;
+    position: relative;
+    left: 5%;
+    z-index: 1;
+    order: 1;
+    color: white;
+    font-size: 60px;
+    background-color: transparent;
+    border-style: none;
+}
+
+.right_btn {
+    cursor:pointer;
+    position: relative;
+    right: 5%;
+    z-index: 1;
+    order: 3;
+    color: white;
+    font-size: 60px;
+    background-color: transparent;
+    border-style: none;
+
+}
+
+.flyer_img_container {
+    width: 100%;
+    order: 2;
+    padding-left: 0;
+    list-style: none;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.img_scroll_lst {
+
+}
+
+.img_container {
+    display: inline-block;
+    width: 100%;
+    margin: -2px;
+}
+
+.img_entry {
+    width: 100%;
+}
+
+.bottom_buttons_container {
+    padding-left: 0;
+    display: -webkit-inline-box;
+    list-style: none;
+    margin: 0;
+}
+
+.button {
+    margin: 7px;
+    height: 15px;
+    width: 15px;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor:pointer;
+}
+
+.button_active {
+    margin: 7px;
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor:pointer;
+}
+
+
+.fa {
+    margin-left: 8px;
+    cursor:pointer;
+    background-color: transparent;
+    border: none;
+    font-size:24px;
+    color: #bbb;
+}
