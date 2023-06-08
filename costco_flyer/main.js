@@ -10,7 +10,7 @@ const pause_button = document.querySelector(".fa");
 
 NodeList.prototype.indexOf = Array.prototype.indexOf;
 
-
+// Page changing ---------------------------------------------------------------------------
 function adjust_offset(animated){
     if (animated){
         window.requestAnimationFrame(ani_frame);
@@ -19,9 +19,21 @@ function adjust_offset(animated){
         const offset = - curr_showing * slide_container.offsetWidth;
         slide_container.style.transform = 'translateX(' + offset + 'px)';
     }
-
 }
 
+function adjust_curr_showing(increment){
+    curr_showing += increment;
+    if (curr_showing < 0) {
+        curr_showing = max_flyer_index;
+    } else if (curr_showing > max_flyer_index) {
+        curr_showing = 0;
+    }
+
+    adjust_offset(1);
+}
+//---------------------------------------------------------------------------
+
+// Animation ---------------------------------------------------------------------------
 function ani_frame(){
     var offset = - curr_showing * slide_container.offsetWidth;
     let style = window.getComputedStyle(slide_container);
@@ -36,20 +48,11 @@ function ani_frame(){
     if (offset !== curr_translateX){
         window.requestAnimationFrame(ani_frame);
     }
-
 }
+//---------------------------------------------------------------------------
 
-function adjust_curr_showing(increment){
-    curr_showing += increment;
-    if (curr_showing < 0) {
-        curr_showing = max_flyer_index;
-    } else if (curr_showing > max_flyer_index) {
-        curr_showing = 0;
-    }
 
-    adjust_offset(1);
-}
-
+// Buttons and listeners ---------------------------------------------------------------------------
 function prev_page(){
     buttons[curr_showing].className = 'button';
     adjust_curr_showing(-1);
@@ -90,3 +93,4 @@ function pause_button_listener(){
     }
 }
 pause_button.addEventListener("click", pause_button_listener);
+//---------------------------------------------------------------------------
