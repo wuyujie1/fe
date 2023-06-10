@@ -1,96 +1,145 @@
-const max_flyer_index = 5;
+NodeList.prototype.indexOf = Array.prototype.indexOf
 
-var curr_showing = 0;
-const buttons = document.querySelectorAll("button.button, button.button_active");
-const slide_container = document.querySelector(".img_scroll_lst");
-const prev_button = document.querySelector(".left_btn");
-const next_button = document.querySelector(".right_btn");
-const button_container = document.querySelector(".bottom_buttons_container");
-const pause_button = document.querySelector(".fa");
+// Specify index of the image that are currently displaying, default set to index 0.
+let currShowing = 0
+// List of image source files.
+let imgSourcePaths = ["resources/d-hero-230529-clothing-en.avif",
+    "resources/d-hero-230529-coupons-en.avif", "resources/d-hero-230529-travel-en.avif",
+    "resources/d-hero-230529-whey-isolate-en.avif", "resources/d-hero-230530-samsung-home-event-en.avif",
+    "resources/d-hero-230601-appliances-en.avif"]
+// Specify maximum number of images that are allowed.
+const maxFlyerIndex = imgSourcePaths.length - 1
 
-NodeList.prototype.indexOf = Array.prototype.indexOf;
+// Element which renders currently displayed image.
+const centerScreenContainer = document.querySelector(".centerScreenContainer")
+// Previous image button.
+const prevButton = document.querySelector(".leftBtn")
+// Next image button.
+const nextButton = document.querySelector(".rightBtn")
+// Element which contains the navigation bar (located underneath the image).
+const naviBarContainer = document.querySelector(".naviBarContainer")
+// Pause and Play button.
+const pauseButton = document.querySelector(".fa")
+// Desired delay for auto play functionality.
+let timeout = 5000
+// Initialize auto play interval.
+let autoPlayInterval = setInterval(nextPage, timeout)
 
-// Page changing ---------------------------------------------------------------------------
-function adjust_offset(animated){
-    if (animated){
-        window.requestAnimationFrame(ani_frame);
+// Helper function to switch (from imgSourcePaths) a new image for rendering.
+function adjustCurrShowing(desiredImgIndex){
+    let navBar = document.querySelectorAll(".navBarEntry")
+    navBar[currShowing].style.borderColor = "gray"
 
+    let flyerImgContainer = document.querySelector(".flyerImgContainer")
+    currShowing = desiredImgIndex
+    if (currShowing < 0) {
+        currShowing = maxFlyerIndex
+    } else if (currShowing > maxFlyerIndex) {
+        currShowing = 0
+    }
+    flyerImgContainer.src = imgSourcePaths[currShowing];
+    flyerImgContainer.onmouseover = function(){
+        clearInterval(autoPlayInterval)
+    }
+    flyerImgContainer.onmouseleave = function(){
+        if (pauseButton.id === "paused") {
+            autoPlayInterval = setInterval(nextPage, timeout)
+        }
+    }
+
+    navBar[currShowing].style.borderColor = "red"
+}
+
+// Previous image button listener.
+function prevPage(){
+    adjustCurrShowing(currShowing - 1)
+}
+prevButton.addEventListener("click", prevPage)
+
+// Next image button listener.
+function nextPage(){
+    adjustCurrShowing(currShowing + 1)
+}
+nextButton.addEventListener("click", nextPage)
+
+// Initialize main section of the flyer (image container).
+function initImgContainer(){
+    const imgContainer = document.createElement("img")
+    imgContainer.className = "flyerImgContainer"
+    centerScreenContainer.insertBefore(imgContainer, nextButton)
+    adjustCurrShowing(currShowing)
+}
+
+// Dynamically generating navigation bar (depending on number of images).
+function initNaviBar(){
+    for (let i = 0; i <= maxFlyerIndex; i++){
+        const barEntry = document.createElement("img")
+        barEntry.src = imgSourcePaths[i]
+        barEntry.className = "navBarEntry"
+        barEntry.addEventListener("click", () => {
+            adjustCurrShowing(i)
+        })
+        barEntry.onmouseover = function(){
+            barEntry.style.width = "240px"
+        }
+        barEntry.onmouseleave = function(){
+            barEntry.style.width = "200px"
+        }
+
+        naviBarContainer.insertBefore(barEntry, pauseButton)
+    }
+}
+
+// Pause button listener. Pause to stop auto play, unpause to resume.
+pauseButton.addEventListener("click", () => {
+    if (pauseButton.id === "unpaused"){
+        pauseButton.id = "paused"
+        pauseButton.innerHTML = "&#xf04c;"
+        autoPlayInterval = setInterval(nextPage, timeout)
     } else {
-        const offset = - curr_showing * slide_container.offsetWidth;
-        slide_container.style.transform = 'translateX(' + offset + 'px)';
+        pauseButton.id = "unpaused"
+        pauseButton.innerHTML = "&#xf04b;"
+        clearInterval(autoPlayInterval)
     }
+})
+
+// Call all initializers.
+function initialization(){
+    initNaviBar()
+    initImgContainer()
 }
+initialization()
 
-function adjust_curr_showing(increment){
-    curr_showing += increment;
-    if (curr_showing < 0) {
-        curr_showing = max_flyer_index;
-    } else if (curr_showing > max_flyer_index) {
-        curr_showing = 0;
-    }
-
-    adjust_offset(1);
-}
-//---------------------------------------------------------------------------
-
-// Animation ---------------------------------------------------------------------------
-function ani_frame(){
-    var offset = - curr_showing * slide_container.offsetWidth;
-    let style = window.getComputedStyle(slide_container);
-    let matrix = new WebKitCSSMatrix(style.transform);
-    let curr_translateX = matrix.m41;
-
-    const ani_duration = 100;
-    const stepSize = (offset - curr_translateX) / ani_duration;
-
-    slide_container.style.transform = 'translateX(' + (curr_translateX + stepSize) + 'px)';
-
-    if (offset !== curr_translateX){
-        window.requestAnimationFrame(ani_frame);
-    }
-}
-//---------------------------------------------------------------------------
+// // Animation ---------------------------------------------------------------------------
+// function aniFrame(){
+//     var offset = - currShowing * slideContainer.offsetWidth
+//     let style = window.getComputedStyle(slideContainer)
+//     let matrix = new WebKitCSSMatrix(style.transform)
+//     let currTranslateX = matrix.m41
+//
+//     const aniDuration = 100
+//     const stepSize = (offset - currTranslateX) / aniDuration
+//
+//     slideContainer.style.transform = 'translateX(' + (currTranslateX + stepSize) + 'px)'
+//
+//     if (offset !== currTranslateX){
+//         window.requestAnimationFrame(aniFrame)
+//     }
+// }
+// //---------------------------------------------------------------------------
+//
+//
 
 
-// Buttons and listeners ---------------------------------------------------------------------------
-function prev_page(){
-    buttons[curr_showing].className = 'button';
-    adjust_curr_showing(-1);
-    buttons[curr_showing].className = 'button_active';
-}
-prev_button.addEventListener("click", prev_page);
+// function buttonListener(){
+//     let index = buttons.indexOf(event.target)
+//     if (0 <= index && index <= maxFlyerIndex) {
+//         buttons[currShowing].className = 'button'
+//         event.target.className = 'buttonActive'
+//         currShowing = index
+//         adjustOffset(1)
+//     }
+// }
+//
+// buttonContainer.addEventListener("click", buttonListener)
 
-function next_page(){
-    buttons[curr_showing].className = 'button';
-    adjust_curr_showing(1);
-    buttons[curr_showing].className = 'button_active';
-}
-next_button.addEventListener("click", next_page);
-
-function button_listener(){
-    let index = buttons.indexOf(event.target);
-    if (0 <= index && index <= max_flyer_index) {
-        buttons[curr_showing].className = 'button';
-        event.target.className = 'button_active';
-        curr_showing = index;
-        adjust_offset(1);
-    }
-}
-
-button_container.addEventListener("click", button_listener)
-
-var autoPlayInterval = setInterval(next_page, 5000);
-function pause_button_listener(){
-    if (pause_button.id === "unpaused"){
-        pause_button.id = "paused";
-        pause_button.innerHTML = "&#xf04c;";
-
-        autoPlayInterval = setInterval(next_page, 5000);
-    } else {
-        pause_button.id = "unpaused";
-        pause_button.innerHTML = "&#xf04b;";
-        clearInterval(autoPlayInterval);
-    }
-}
-pause_button.addEventListener("click", pause_button_listener);
-//---------------------------------------------------------------------------
