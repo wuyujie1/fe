@@ -37,7 +37,13 @@ function adjustCurrShowing(desiredImgIndex){
     } else if (currShowing > maxFlyerIndex) {
         currShowing = 0
     }
+
+    flyerImgContainer.style.opacity = "0"
+
     flyerImgContainer.src = imgSourcePaths[currShowing];
+
+    requestAnimationFrame(animationFrameDisplay)
+
     flyerImgContainer.onmouseover = function(){
         clearInterval(autoPlayInterval)
     }
@@ -48,6 +54,15 @@ function adjustCurrShowing(desiredImgIndex){
     }
 
     navBar[currShowing].style.borderColor = "red"
+}
+
+// Image changing animation (fade in effect)
+function animationFrameDisplay() {
+    let flyerImgContainer = document.querySelector(".flyerImgContainer")
+    if (flyerImgContainer.style.opacity !== "1") {
+        flyerImgContainer.style.opacity = (Number(flyerImgContainer.style.opacity) + 0.005).toString()
+        requestAnimationFrame(animationFrameDisplay)
+    }
 }
 
 // Previous image button listener.
