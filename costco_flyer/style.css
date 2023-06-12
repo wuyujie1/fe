@@ -1,85 +1,62 @@
-body {
-    margin: 0;
-}
-
 .flyerContainer {
-    text-align: center;
-    max-width: 1500px;
+  text-align: center;
+  max-width: 1500px;
+}
+.flyerContainer .centerScreenContainer {
+  display: flex;
+}
+.flyerContainer .centerScreenContainer .leftBtn {
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  color: white;
+  font-size: 60px;
+  background-color: transparent;
+  border-style: none;
+  left: 5%;
+  order: 1;
+}
+.flyerContainer .centerScreenContainer .flyerImgContainer {
+  border-width: 2px;
+  border-color: gray;
+  width: 100%;
+  order: 2;
+  padding-left: 0;
+}
+.flyerContainer .centerScreenContainer .rightBtn {
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  color: white;
+  font-size: 60px;
+  background-color: transparent;
+  border-style: none;
+  right: 5%;
+  order: 3;
+}
+.flyerContainer .naviBarContainer {
+  padding-left: 0;
+  display: -webkit-inline-box;
+  list-style: none;
+  margin: 0;
+  position: relative;
+}
+.flyerContainer .naviBarContainer .navBarEntry {
+  margin: 10px 2px 0 0;
+  width: 200px;
+  border-style: solid;
+  border-color: gray;
+  border-width: 1px;
+  cursor: pointer;
+}
+.flyerContainer .naviBarContainer .fa {
+  margin-left: 8px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #bbb;
+  position: relative;
+  top: -24px;
 }
 
-.centerScreenContainer {
-    display: flex;
-}
-
-
-.leftBtn {
-    cursor:pointer;
-    position: relative;
-    left: 5%;
-    z-index: 1;
-    order: 1;
-    color: white;
-    font-size: 60px;
-    background-color: transparent;
-    border-style: none;
-}
-
-.flyerImgContainer {
-    width: 100%;
-    order: 2;
-    padding-left: 0;
-
-}
-
-.rightBtn {
-    cursor:pointer;
-    position: relative;
-    right: 5%;
-    z-index: 1;
-    order: 3;
-    color: white;
-    font-size: 60px;
-    background-color: transparent;
-    border-style: none;
-
-}
-
-.naviBarContainer {
-    padding-left: 0;
-    display: -webkit-inline-box;
-    list-style: none;
-    margin: 0;
-}
-
-.navBarEntry {
-    margin: 10px 2px 0 0;
-    width: 200px;
-    border-style: solid;
-    border-color: gray;
-    border-width: 1px;
-    cursor: pointer;
-}
-
-/*.buttonActive {*/
-/*    margin: 7px;*/
-/*    height: 15px;*/
-/*    width: 15px;*/
-/*    background-color: #bbb;*/
-/*    border-style: solid;*/
-/*    border-width: 1px;*/
-/*    border-color: #bbb;*/
-/*    border-radius: 50%;*/
-/*    display: inline-block;*/
-/*    cursor:pointer;*/
-/*}*/
-
-
-.fa {
-    margin-left: 8px;
-    cursor:pointer;
-    background-color: transparent;
-    border: none;
-    color: #bbb;
-    position: relative;
-    top: -24px;
-}
+/*# sourceMappingURL=style.css.map */

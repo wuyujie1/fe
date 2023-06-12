@@ -124,37 +124,3 @@ function initialization(){
     initImgContainer()
 }
 initialization()
-
-// // Animation ---------------------------------------------------------------------------
-// function aniFrame(){
-//     var offset = - currShowing * slideContainer.offsetWidth
-//     let style = window.getComputedStyle(slideContainer)
-//     let matrix = new WebKitCSSMatrix(style.transform)
-//     let currTranslateX = matrix.m41
-//
-//     const aniDuration = 100
-//     const stepSize = (offset - currTranslateX) / aniDuration
-//
-//     slideContainer.style.transform = 'translateX(' + (currTranslateX + stepSize) + 'px)'
-//
-//     if (offset !== currTranslateX){
-//         window.requestAnimationFrame(aniFrame)
-//     }
-// }
-// //---------------------------------------------------------------------------
-//
-//
-
-
-// function buttonListener(){
-//     let index = buttons.indexOf(event.target)
-//     if (0 <= index && index <= maxFlyerIndex) {
-//         buttons[currShowing].className = 'button'
-//         event.target.className = 'buttonActive'
-//         currShowing = index
-//         adjustOffset(1)
-//     }
-// }
-//
-// buttonContainer.addEventListener("click", buttonListener)
-
