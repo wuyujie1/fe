@@ -34,6 +34,19 @@
   font-weight: bold;
   color: dimgray;
 }
+.imageBrowserContainer .searchHistoryBox {
+  background: rgba(204, 204, 204, 0.5);
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: gray;
+  display: inline-block;
+  width: 10%;
+  margin: 0 3.07% 0 0;
+  list-style: none;
+  text-align: left;
+  padding-left: 0;
+}
 .imageBrowserContainer .thumbnailContainer {
   display: flex;
   justify-content: center;

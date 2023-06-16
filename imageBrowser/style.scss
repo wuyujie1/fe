@@ -51,6 +51,17 @@
     }
   }
 
+  .searchHistoryBox {
+    @include backgroundColor;
+    @include borderRounding;
+    display: inline-block;
+    width: 10%;
+    margin: 0 3.07% 0 0;
+    list-style: none;
+    text-align: left;
+    padding-left: 0;
+  }
+
   .thumbnailContainer {
     display: flex;
     justify-content: center;
