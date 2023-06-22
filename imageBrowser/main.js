@@ -18,6 +18,8 @@ const thumbnailContainer = document.querySelector(".thumbnailContainer")
 let pageNum = 1
 // Variable holds the maximum page number for current search.
 let currSearchMaxPage = 1
+// Variable holds the current query.
+let currSearch = ""
 
 // Helper function to switch (from imgSourcePaths) a new image for rendering.
 function adjustCurrShowing(index){
@@ -40,38 +42,43 @@ async function getData(query){
 
     try {
         let response = await fetch(fetchURL)
-        console.log(response)
-        let data = await response.json()
+        if (response.ok) {
+            console.log(1)
+            console.log(response)
+            let data = await response.json()
 
-        for (let i = 0; i < data.results.length; i++) {
-            const searchEntry = document.createElement("img")
-            searchEntry.src = data.results[i].urls.regular;
-            searchEntry.className = "searchEntry"
+            for (let i = 0; i < data.results.length; i++) {
+                const searchEntry = document.createElement("img")
+                searchEntry.src = data.results[i].urls.regular;
+                searchEntry.className = "searchEntry"
 
-            searchEntry.addEventListener("click", () => {
-                adjustCurrShowing(i)
-            })
+                searchEntry.addEventListener("click", () => {
+                    adjustCurrShowing(i)
+                })
 
-            searchResults.append(searchEntry)
+                searchResults.append(searchEntry)
+            }
+            adjustCurrShowing(0)
+            return await data.total_pages
         }
-        adjustCurrShowing(0)
-        return await data.total_pages
+        console.log(2)
+        return Promise.reject(response)
     }
     catch (error) {
         console.log(error)
     }
 }
 // Event listener for search button.
-async function searchBtnListener() {
+async function searchBtnListener(value= null, log = true) {
     pageNum = 1
     cleanCurrPage()
 
-    let value = inputBox.value
+    if (value === null) {value = inputBox.value}
     if (value !== ""){
+        currSearch = value
         currSearchMaxPage = await getData(value)
         let searchHistory = JSON.parse(localStorage.getItem("searchHistory"))
         const currValueIndex = searchHistory.indexOf(value)
-        console.log(currValueIndex)
         if (currValueIndex === -1){
             searchHistory.pop()
             searchHistory.unshift(value)
@@ -79,10 +86,13 @@ async function searchBtnListener() {
             searchHistory.splice(currValueIndex, 1)
             searchHistory.unshift(value)
         }
-        localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+        if (log) {
+            localStorage.setItem("searchHistory", JSON.stringify(searchHistory))
+            deleteSearchHistory()
+        }
+
 
     }
-    deleteSearchHistory()
 }
 searchBtn.addEventListener("click", searchBtnListener)
 
@@ -90,6 +100,7 @@ searchBtn.addEventListener("click", searchBtnListener)
 inputBox.addEventListener("keypress", (e)=>{
     if (e.key === "Enter") {
         searchBtnListener()
+        inputBox.blur()
     }
 })
 
@@ -120,8 +131,8 @@ rightBtn.addEventListener("click", nextPageBtnListener)
 
 // Create search history container when input box is clicked.
 function genSearchHistory(){
-    const prevHistoryContainer = document.querySelector(".searchHistoryContainer")
-    if (prevHistoryContainer === null) {
+    const historyContainer = document.querySelector(".searchHistoryContainer")
+    if (historyContainer === null) {
         const searchHistoryContainer = document.createElement("div")
         searchHistoryContainer.className = "searchHistoryContainer"
         searchHistoryContainer.style.position = "relative"
@@ -133,27 +144,58 @@ function genSearchHistory(){
         searchHistoryBox.className = "searchHistoryBox"
         searchHistoryContainer.append(searchHistoryBox)
 
-        const searchHistory = JSON.parse(localStorage.getItem("searchHistory"))
-        for (let i = 0; i < 10; i++){
-            if (searchHistory[i] !== null){
-                const searchHistoryEntry = document.createElement("li")
-                searchHistoryEntry.innerHTML = searchHistory[i]
-                searchHistoryEntry.style.paddingLeft = "5px"
-                searchHistoryEntry.style.paddingTop = "5px"
-                searchHistoryEntry.style.cursor = "pointer"
+        genSearchEntries(inputBox.value)
+    }
+}
 
-                searchHistoryEntry.addEventListener("click", () => {
-                    inputBox.value = searchHistory[i]
-                    searchBtnListener()
-                })
+function genSearchEntries(keyword){
+    const searchHistoryBox = document.querySelector(".searchHistoryBox")
+    const searchHistory = JSON.parse(localStorage.getItem("searchHistory"))
+    for (let i = 0; i < 10; i++){
+        if (searchHistory[i] !== null && searchHistory[i].includes(keyword)){
+            const searchHistoryEntry = document.createElement("li")
+            searchHistoryEntry.innerHTML = searchHistory[i]
+            searchHistoryEntry.style.paddingLeft = "5px"
+            searchHistoryEntry.style.paddingTop = "5px"
+            searchHistoryEntry.style.cursor = "pointer"
 
-                searchHistoryBox.append(searchHistoryEntry)
-            }
+            searchHistoryEntry.addEventListener("click", () => {
+                inputBox.value = searchHistory[i]
+                searchBtnListener()
+            })
+
+            searchHistoryBox.append(searchHistoryEntry)
         }
     }
 }
 
-// Create event listener for the input box (toggle search history)
+// Event listener for input box, catching if a key is pressed.
+function onInputBoxKeyDown(){
+    // Update search history box
+    if (document.querySelector(".searchHistoryBox") !== null) {
+        document.querySelectorAll('li').forEach(el => el.remove());
+        let keyword = inputBox.value
+        if (event.key !== "Backspace") {
+            keyword += event.key
+        } else {
+            keyword = keyword.slice(0, -1);
+        }
+        genSearchEntries(keyword)
+
+        const searchHistory = document.querySelectorAll('li')
+        if (searchHistory.length !== 0) {
+            if (searchHistory[0].innerHTML !== currSearch) {
+                searchBtnListener(searchHistory[0].innerHTML, false)
+            }
+        }
+    }
+
+
+}
+inputBox.addEventListener("keydown", onInputBoxKeyDown)
+
+
+// Event listener for the input box (toggle search history)
 inputBox.addEventListener("click", (e)=>{
     genSearchHistory()
 })
