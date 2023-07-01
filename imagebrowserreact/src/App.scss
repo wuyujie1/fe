@@ -1,0 +1,168 @@
+@mixin borderRounding {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: gray;
+}
+
+@mixin backgroundColor {
+  background: rgba(204, 204, 204, 0.5);
+}
+
+@mixin preNextBtns {
+  display: inline-block;
+  cursor:pointer;
+  color: rgba(204, 204, 204, 0.5);
+  font-size: 60px;
+  background-color: transparent;
+  border-style: none;
+}
+
+@mixin pageIndexBtnStyles {
+  display: inline-block;
+  margin: 5px 10px 5px 10px;
+  color: white;
+  background-color: rgba(204, 204, 204, 0.3);
+  border-radius: 10px;
+  min-width: 35px;
+  cursor:pointer;
+  font-weight: bold;
+  align-items: center;
+  padding: 0 3px 0 3px
+}
+
+.imageBrowserContainer {
+  text-align: center;
+  padding: 300px 0 200px 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .progressBar {
+    position: relative;
+    top: -300px;
+    height: 5px;
+
+  }
+
+  .searchBarContainer {
+    margin-bottom: 400px;
+    vertical-align: center;
+
+    .searchBarInputBox {
+      @include borderRounding;
+      @include backgroundColor;
+      width: 10%;
+      height: 25px;
+      display: inline-block;
+      text-align: left;
+      font-size: 15px;
+      vertical-align: center;
+      color: black;
+      margin-right: 5px;
+    }
+
+    .searchBtn {
+      @include borderRounding;
+      @include backgroundColor;
+      cursor:pointer;
+      padding: 4px 2px 4px 2px;
+      font-weight: bold;
+      color: dimgray;
+    }
+  }
+
+  .searchHistoryContainer{
+    position: relative;
+    top: -395px;
+    height: 0;
+
+    .searchHistoryBox {
+      @include backgroundColor;
+      @include borderRounding;
+      display: inline-block;
+      width: 10%;
+      min-height: 60px;
+      margin: 0 3.07% 0 0;
+      list-style: none;
+      text-align: left;
+      padding-left: 0;
+    }
+
+    .searchHistoryEntry {
+      display: inline-block;
+      padding: 1px 5px 4px 5px;
+      cursor: pointer;
+    }
+    //.searchHistoryEntry:hover {
+    //  background-color: rgba(255, 255, 255, 0.8);;
+    //}
+
+    .deleteBtn {
+      float: right;
+      margin-right: 5px;
+      color: rgba(80, 80, 80, 0.8);
+      cursor: pointer;
+    }
+  }
+
+
+  .naviBarContainer {
+    .thumbnailContainer {
+      display: flex;
+      justify-content: center;
+
+      .leftBtn {
+        @include preNextBtns;
+        order: 1
+      }
+
+      .searchResultContainer {
+        @include borderRounding;
+        @include backgroundColor;
+        vertical-align: center;
+        display: inline-block;
+        order: 2;
+        width: 90%;
+        max-width: 1690px;
+
+
+        .searchEntry {
+          @include borderRounding;
+          margin: 2px;
+          width: 160px;
+          height: 90px;
+          cursor:pointer;
+        }
+      }
+
+      .rightBtn {
+        @include preNextBtns;
+        order: 3
+      }
+    }
+
+    .pageNumberContainer {
+      list-style: "none";
+      display: flex;
+      align-items: end;
+      justify-content: center;
+
+      .pageIndexButtons {
+        @include pageIndexBtnStyles;
+        font-size: 30px;
+        line-height:1.5em;
+        height: 40px;
+      }
+
+      .currPageIndexButton {
+        @include pageIndexBtnStyles;
+        font-size: 40px;
+        line-height:1.3em;
+        height: 50px;
+      }
+    }
+  }
+
+
+}
