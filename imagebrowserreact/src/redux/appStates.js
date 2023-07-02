@@ -5,6 +5,7 @@ const SET_RENDERING_LIST = "SET_RENDERING_LIST"
 const SET_RENDERING_URL = "SET_RENDERING_URL"
 const SET_SEARCH_HISTORY = "SET_SEARCH_HISTORY"
 const SET_DISPLAY_HISTORY = "SET_DISPLAY_HISTORY"
+const SET_SELECTED_IMAGES = "SET_SELECTED_IMAGES"
 
 export const setCurrPage = (newPageNum) => {
     return {
@@ -55,6 +56,13 @@ export const setDisplayHistory = (bool) => {
     }
 }
 
+export const setSelectedImages = (newList) => {
+    return {
+        type: SET_SELECTED_IMAGES,
+        selectedList: newList
+    }
+}
+
 const initialState = {
     currPageNum: 1,
     maxPageNum: 1,
@@ -62,7 +70,8 @@ const initialState = {
     renderingList: [],
     renderingURL: "",
     searchHistory: JSON.parse(localStorage.getItem("searchHistory")),
-    displayHistory: false
+    displayHistory: false,
+    selectedImages: []
 }
 const appStateReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -94,6 +103,10 @@ const appStateReducer = (state = initialState, action) => {
         case SET_DISPLAY_HISTORY: return {
             ...state,
             displayHistory: action.displayHistory
+        }
+        case SET_SELECTED_IMAGES: return {
+            ...state,
+            selectedImages: action.selectedList
         }
         default: return state
     }

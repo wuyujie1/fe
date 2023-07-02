@@ -2,8 +2,6 @@
 const imageContainer = document.querySelector(".imageBrowserContainer")
 // Locate searchBarInputBox element in HTML.
 const inputBox = document.querySelector(".searchBarInputBox")
-// Locate searchBarContainer element in HTML.
-const searchBarContainer = document.querySelector(".searchBarContainer")
 // Locate searchBtn element in HTML.
 const searchBtn = document.querySelector(".searchBtn")
 // Locate leftBtn element in HTML.
@@ -38,12 +36,11 @@ function cleanCurrPage(){
 
 // Async function to request data from the server.
 async function getData(query){
-    const fetchURL = "https://api.unsplash.com/search/photos?page=" + pageNum.toString() + "&query=" + query + "&client_id=JyL04GY33kzOvM5XrcJCNIHVz7SYScaiA8trI8_DHnM"
+    const fetchURL = "https://api.unsplash.com/search/photos?page=" + pageNum.toString() + "&query=" + query + "&per_page=9&client_id=JyL04GY33kzOvM5XrcJCNIHVz7SYScaiA8trI8_DHnM"
 
     try {
         let response = await fetch(fetchURL)
         if (response.ok) {
-            console.log(1)
             console.log(response)
             let data = await response.json()
 
@@ -61,7 +58,6 @@ async function getData(query){
             adjustCurrShowing(0)
             return await data.total_pages
         }
-        console.log(2)
         return Promise.reject(response)
     }
     catch (error) {

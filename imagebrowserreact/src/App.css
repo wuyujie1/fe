@@ -105,6 +105,11 @@
   height: 90px;
   cursor: pointer;
 }
+.imageBrowserContainer .naviBarContainer .thumbnailContainer .searchResultContainer .searchEntryCheckBox {
+  position: relative;
+  left: -25px;
+  top: -75px;
+}
 .imageBrowserContainer .naviBarContainer .thumbnailContainer .rightBtn {
   display: inline-block;
   cursor: pointer;

@@ -9,7 +9,7 @@ import {
     setMaxPageNum,
     setRenderingList,
     setRenderingURL,
-    setSearchHistory
+    setSearchHistory, setSelectedImages
 } from "./redux/appStates";
 
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -22,7 +22,8 @@ const mapStateToProps = state => {
         renderingList: state.renderingList,
         renderingURL: state.renderingURL,
         searchHistory: state.searchHistory,
-        displayHistory: state.displayHistory
+        displayHistory: state.displayHistory,
+        selectedImages: state.selectedImages
     }
 }
 
@@ -34,14 +35,33 @@ const mapDispatchToProps = dispatch => {
         setRenderingList: (newList) => dispatch(setRenderingList(newList)),
         setRenderingURL: (newURL) => dispatch(setRenderingURL(newURL)),
         setSearchHistory: (newList) => dispatch(setSearchHistory(newList)),
-        setDisplayHistory: (bool) => dispatch(setDisplayHistory(bool))
+        setDisplayHistory: (bool) => dispatch(setDisplayHistory(bool)),
+        setSelectedImages: (newList) => dispatch(setSelectedImages(newList))
     }
 }
 
 function SearchResultContainer(props) {
-    const resultList = props.renderingList.map(img => <img key={img.id} className="searchEntry" onClick={() => {
-        props.setRenderingURL(img.urls.regular)
-    }} src={img.urls.regular}></img>)
+    function SearchResult (props) {
+        function onchange(e){
+            let selectedImagesTemp = [...props.selectedImages]
+            if (e.target.checked) {
+                selectedImagesTemp.push(props.img.urls.regular)
+            } else {
+                const currValueIndex = selectedImagesTemp.indexOf(props.img.urls.regular)
+                selectedImagesTemp.splice(currValueIndex, 1)
+            }
+            props.setSelectedImages(selectedImagesTemp)
+        }
+        return (
+            <span>
+                <img className="searchEntry" onClick={() => {props.setRenderingURL(props.img.urls.regular)}} src={props.img.urls.regular}></img>
+                <input className="searchEntryCheckBox" type={"checkbox"} onChange={(e) => onchange(e)}></input>
+            </span>
+        )
+    }
+    const ConnectedSearchResult = connect(mapStateToProps, mapDispatchToProps)(SearchResult)
+
+    const resultList = props.renderingList.map(img => <ConnectedSearchResult key={img.urls.regular} img={img}></ConnectedSearchResult>)
 
     return (
         <div className="searchResultContainer">
