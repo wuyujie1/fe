@@ -31,6 +31,113 @@
   padding: 0 3px 0 3px
 }
 
+@mixin thumbnailImages {
+  margin: 2px;
+  width: 140px;
+  height: 80px;
+  cursor:pointer;
+}
+
+@mixin XBtn {
+  float: right;
+  margin-right: 5px;
+  color: rgba(80, 80, 80, 0.8);
+  cursor: pointer;
+}
+
+.PDFGeneratorSection {
+  @include backgroundColor;
+  overflow: scroll;
+  background-color: white;
+
+  .PDFEntry {
+    @include thumbnailImages;
+    @include borderRounding;
+    cursor: default;
+  }
+
+  .Btns {
+    text-align: center;
+    padding: 10px 0 10px 0;
+    background-color: white;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+
+    .fontSelector {
+      display: inline-block;
+      height: 27px;
+
+
+      .currFont {
+        border-width: 1px;
+        margin: 0 0 0 10px;
+        padding: 5px;
+        width: 100px;
+      }
+
+      .downArrow {
+        background-color: white;
+        border-width: 1px 1px 1px 0;
+        font-size: 18.5px;
+        cursor: pointer;
+      }
+
+      .dropdownContent {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .fontEntry {
+        @include borderRounding;
+        background-color: white;
+        margin-bottom: 2px;
+        padding: 3px;
+        font-size: 8px;
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    .PDFResetBtn {
+      @include borderRounding;
+      border-color: red;
+      background-color: red;
+      color: white;
+      margin: 0 10px 0 10px;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .PDFCompileBtn {
+      @include borderRounding;
+      border-color: green;
+      background-color: green;
+      color: white;
+      margin: 0 10px 0 10px;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .hoverDelete {
+    color: rgba(80, 80, 80, 0.8);
+    border-style: solid;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border-width: 1px;
+    border-color: gray;
+    position: relative;
+    top: -68px;
+    left: -25px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
 .imageBrowserContainer {
   text-align: center;
   padding: 300px 0 200px 0;
@@ -99,10 +206,7 @@
     //}
 
     .deleteBtn {
-      float: right;
-      margin-right: 5px;
-      color: rgba(80, 80, 80, 0.8);
-      cursor: pointer;
+      @include XBtn
     }
   }
 
@@ -129,16 +233,13 @@
 
         .searchEntry {
           @include borderRounding;
-          margin: 2px;
-          width: 160px;
-          height: 90px;
-          cursor:pointer;
+          @include thumbnailImages;
         }
 
         .searchEntryCheckBox {
           position: relative;
-          left: -25px;
-          top: -75px;
+          left: -26px;
+          top: -66px;
         }
       }
 

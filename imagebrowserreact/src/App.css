@@ -1,3 +1,100 @@
+.PDFGeneratorSection {
+  background: rgba(204, 204, 204, 0.5);
+  overflow: scroll;
+  background-color: white;
+}
+.PDFGeneratorSection .PDFEntry {
+  margin: 2px;
+  width: 140px;
+  height: 80px;
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: gray;
+  cursor: default;
+}
+.PDFGeneratorSection .Btns {
+  text-align: center;
+  padding: 10px 0 10px 0;
+  background-color: white;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+}
+.PDFGeneratorSection .Btns .fontSelector {
+  display: inline-block;
+  height: 27px;
+}
+.PDFGeneratorSection .Btns .fontSelector .currFont {
+  border-width: 1px;
+  margin: 0 0 0 10px;
+  padding: 5px;
+  width: 100px;
+}
+.PDFGeneratorSection .Btns .fontSelector .downArrow {
+  background-color: white;
+  border-width: 1px 1px 1px 0;
+  font-size: 18.5px;
+  cursor: pointer;
+}
+.PDFGeneratorSection .Btns .fontSelector .dropdownContent {
+  list-style: none;
+  padding-left: 0;
+}
+.PDFGeneratorSection .Btns .fontSelector .fontEntry {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: gray;
+  background-color: white;
+  margin-bottom: 2px;
+  padding: 3px;
+  font-size: 8px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+.PDFGeneratorSection .Btns .PDFResetBtn {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: gray;
+  border-color: red;
+  background-color: red;
+  color: white;
+  margin: 0 10px 0 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+.PDFGeneratorSection .Btns .PDFCompileBtn {
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: gray;
+  border-color: green;
+  background-color: green;
+  color: white;
+  margin: 0 10px 0 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+.PDFGeneratorSection .hoverDelete {
+  color: rgba(80, 80, 80, 0.8);
+  border-style: solid;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border-width: 1px;
+  border-color: gray;
+  position: relative;
+  top: -68px;
+  left: -25px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
 .imageBrowserContainer {
   text-align: center;
   padding: 300px 0 200px 0;
@@ -101,14 +198,14 @@
   border-width: 1px;
   border-color: gray;
   margin: 2px;
-  width: 160px;
-  height: 90px;
+  width: 140px;
+  height: 80px;
   cursor: pointer;
 }
 .imageBrowserContainer .naviBarContainer .thumbnailContainer .searchResultContainer .searchEntryCheckBox {
   position: relative;
-  left: -25px;
-  top: -75px;
+  left: -26px;
+  top: -66px;
 }
 .imageBrowserContainer .naviBarContainer .thumbnailContainer .rightBtn {
   display: inline-block;

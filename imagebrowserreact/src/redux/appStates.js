@@ -6,6 +6,7 @@ const SET_RENDERING_URL = "SET_RENDERING_URL"
 const SET_SEARCH_HISTORY = "SET_SEARCH_HISTORY"
 const SET_DISPLAY_HISTORY = "SET_DISPLAY_HISTORY"
 const SET_SELECTED_IMAGES = "SET_SELECTED_IMAGES"
+const SET_DISPLAY_FONT_OPTIONS = "SET_DISPLAY_FONT_OPTIONS"
 
 export const setCurrPage = (newPageNum) => {
     return {
@@ -63,6 +64,13 @@ export const setSelectedImages = (newList) => {
     }
 }
 
+export const setDisplayFontOptions = (bool) => {
+    return {
+        type: SET_DISPLAY_FONT_OPTIONS,
+        displayFontOptions: bool
+    }
+}
+
 const initialState = {
     currPageNum: 1,
     maxPageNum: 1,
@@ -71,7 +79,8 @@ const initialState = {
     renderingURL: "",
     searchHistory: JSON.parse(localStorage.getItem("searchHistory")),
     displayHistory: false,
-    selectedImages: []
+    selectedImages: [],
+    displayFontOptions: false
 }
 const appStateReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -107,6 +116,10 @@ const appStateReducer = (state = initialState, action) => {
         case SET_SELECTED_IMAGES: return {
             ...state,
             selectedImages: action.selectedList
+        }
+        case SET_DISPLAY_FONT_OPTIONS: return {
+            ...state,
+            displayFontOptions: action.displayFontOptions
         }
         default: return state
     }
